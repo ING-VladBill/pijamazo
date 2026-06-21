@@ -80,7 +80,7 @@ export default function HomePage() {
   return (
     <div className="flex flex-col">
       {/* HERO */}
-      <section className="relative overflow-hidden px-6 pb-24 pt-20 md:pb-32 md:pt-28">
+      <section className="relative overflow-hidden px-6 pb-12 pt-16 md:pb-16 md:pt-20">
         <div aria-hidden className="pointer-events-none absolute -left-32 -top-32 h-[500px] w-[500px] rounded-full bg-purple-600/10 blur-[120px]" />
         <div aria-hidden className="pointer-events-none absolute -bottom-20 -right-20 h-[400px] w-[400px] rounded-full bg-pink-600/10 blur-[100px]" />
 
@@ -122,6 +122,13 @@ export default function HomePage() {
           <p className="mt-8 font-mono text-xs text-slate-600">
             🌙 +2,400 chicas ya están en modo pijama
           </p>
+        </div>
+        <div className="mt-8 flex justify-center">
+        <div className="animate-bounce text-slate-600">
+            <svg width="76" height="46" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+            <path d="M12 5v14M5 12l7 7 7-7" />
+            </svg>
+        </div>
         </div>
       </section>
 
