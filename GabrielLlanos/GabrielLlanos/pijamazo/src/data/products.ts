@@ -1,0 +1,10 @@
+import type { Product } from "@/types/product"
+
+export const products: Product[] = [
+  { id: "1", name: "Pijama Oso Perezoso", category: "pijamas", price: 89.9, description: "Pijama de dos piezas en algodón pima, corte holgado para máxima comodidad. Estampado de oso perezoso bordado en el bolsillo.", image: "https://placehold.co/600x600/221a12/e2872e?text=Pijama+Oso", sizes: ["S", "M", "L", "XL"], inStock: true },
+  { id: "2", name: "Pijama Franela Cuadros", category: "pijamas", price: 94.9, description: "Clásico pijama a cuadros en franela cepillada, ideal para noches frías. Pantalón con cintura elástica y cordón ajustable.", image: "https://placehold.co/600x600/221a12/b6541f?text=Pijama+Franela", sizes: ["S", "M", "L", "XL", "XXL"], inStock: true },
+  { id: "3", name: "Bata Larga Madriguera", category: "batas", price: 129.9, description: "Bata larga de felpa ultra suave con capucha y bolsillos amplios. El abrazo cálido que necesitas en modo cueva.", image: "https://placehold.co/600x600/221a12/e2872e?text=Bata+Larga", sizes: ["S/M", "L/XL"], inStock: true },
+  { id: "4", name: "Bata Corta Algodón", category: "batas", price: 79.9, description: "Bata corta de algodón orgánico, ligera y transpirable. Perfecta para después de la ducha o las mañanas de domingo.", image: "https://placehold.co/600x600/221a12/b6541f?text=Bata+Corta", sizes: ["S/M", "L/XL"], inStock: false },
+  { id: "5", name: "Pantuflas Madriguera", category: "pantuflas", price: 49.9, description: "Pantuflas cerradas de peluche con suela antideslizante. Tus pies van a agradecer el modo cueva.", image: "https://placehold.co/600x600/221a12/e2872e?text=Pantuflas", sizes: ["36-37", "38-39", "40-41", "42-43"], inStock: true },
+  { id: "6", name: "Set Pijama + Pantuflas", category: "pijamas", price: 119.9, description: "Combo de pijama de algodón suave y pantuflas a juego. El kit completo para no salir de la cama.", image: "https://placehold.co/600x600/221a12/b6541f?text=Set+Combo", sizes: ["S", "M", "L"], inStock: true },
+]
