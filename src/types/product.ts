@@ -5,7 +5,7 @@ export interface Product {
   slug: string
   name: string
   description: string
-  price: number // en soles (PEN)
+  price: number
   category: Category
   image: string
   sizes: string[]
