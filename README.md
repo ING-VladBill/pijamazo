@@ -51,18 +51,6 @@ src/
 
 ![HOME](docs/5w.png)
 
-### 5. Catálogo
-![Catálogo](docs/7w.png)
-
-## Detalle de Producto
-![Detalle de Producto](docs/8w.png)
-
-## Carrito
-![Carrito](docs/9w.png)
----
-
-
-
 ## Carrera
 
 Diseño y Desarrollo de Software — IV Ciclo · Tecsup 2026
