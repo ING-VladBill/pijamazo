@@ -1,47 +1,25 @@
 import { Link } from "react-router-dom"
 import { ArrowRight, Star, Package, Truck, ShieldCheck } from "lucide-react"
-import { featuredProducts } from "@/data/products"
-import type { Product } from "@/types"
 import StarField from "@/components/StarField"
 import PillowField from "@/components/PillowField"
+import ProductCard from "@/components/ProductCard"
+import AuroraBg from "@/components/AuroraBg"
+import { useProducts } from "@/hooks/useProducts"
 import { useEffect, useRef, useState } from "react"
 
-function formatPrice(n: number) {
-  return `S/ ${n.toFixed(2)}`
-}
-
-function ProductCard({ product }: { product: Product }) {
+function SkeletonCard() {
   return (
-    <Link
-      to={`/products/${product.slug}`}
-      className="group relative flex flex-col overflow-hidden rounded-2xl border border-white/5 bg-[#1A1A2E] transition-all duration-300 hover:-translate-y-1 hover:border-purple-500/30 hover:shadow-[0_0_30px_rgba(192,132,252,0.12)]"
-    >
-      <div className="relative h-56 overflow-hidden bg-[#13132a]">
-        <img
-          src={product.image}
-          alt={product.name}
-          className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-          loading="lazy"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#1A1A2E] via-transparent to-transparent" />
-        <span className="absolute left-3 top-3 rounded-full border border-purple-500/30 bg-purple-500/10 px-2.5 py-0.5 font-mono text-[10px] font-medium uppercase tracking-wider text-purple-300">
-          {product.category}
-        </span>
-      </div>
-      <div className="flex flex-1 flex-col gap-2 p-4">
-        <h3 className="font-mono text-sm font-semibold leading-snug text-slate-100">{product.name}</h3>
-        <p className="line-clamp-2 text-xs leading-relaxed text-slate-500">{product.description}</p>
-        <div className="mt-auto flex items-center justify-between pt-3">
-          <span className="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text font-mono text-base font-bold text-transparent">
-            {formatPrice(product.price)}
-          </span>
-          <span className="flex items-center gap-1 text-xs text-pink-400">
-            <ArrowRight size={13} />
-            Ver más
-          </span>
+    <div className="animate-pulse overflow-hidden rounded-2xl border border-white/5 bg-[#1A1A2E]">
+      <div className="h-56 bg-white/5" />
+      <div className="space-y-3 p-4">
+        <div className="h-3 w-2/3 rounded bg-white/5" />
+        <div className="h-3 w-full rounded bg-white/5" />
+        <div className="flex justify-between pt-2">
+          <div className="h-4 w-16 rounded bg-white/5" />
+          <div className="h-4 w-10 rounded bg-white/5" />
         </div>
       </div>
-    </Link>
+    </div>
   )
 }
 
@@ -66,20 +44,24 @@ function CategoryPill({ emoji, label, to, delay = 0 }: {
     <Link
       ref={ref}
       to={to}
-      className="group flex flex-col items-center gap-3 rounded-2xl border border-white/5 bg-[#1A1A2E] p-6 text-center transition-all duration-300 hover:-translate-y-2 hover:border-purple-500/40 hover:shadow-[0_0_28px_rgba(192,132,252,0.18)]"
+      className="group relative flex flex-col items-center gap-3 overflow-hidden rounded-2xl border border-white/5 bg-[#1A1A2E] p-6 text-center transition-all duration-300 hover:-translate-y-2 hover:border-purple-500/40 hover:shadow-[0_0_28px_rgba(139,92,246,0.2)]"
       style={{
         opacity: visible ? 1 : 0,
         transform: visible ? "translateY(0) scale(1)" : "translateY(24px) scale(0.95)",
         transition: `opacity 0.5s ease ${delay}ms, transform 0.5s ease ${delay}ms, box-shadow 0.3s, border-color 0.3s`,
       }}
     >
+      {/* Fondo degradado animado en hover */}
+      <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-purple-500/0 via-pink-500/0 to-purple-500/0 opacity-0 transition-all duration-500 group-hover:from-purple-500/8 group-hover:via-pink-500/4 group-hover:to-purple-500/8 group-hover:opacity-100" />
       <span
-        className="text-4xl transition-transform duration-300 group-hover:scale-125"
-        style={{ filter: "drop-shadow(0 0 8px rgba(192,132,252,0.4))" }}
+        className="relative text-4xl transition-transform duration-300 group-hover:scale-125"
+        style={{ filter: "drop-shadow(0 0 8px rgba(192,132,252,0.5))" }}
       >
         {emoji}
       </span>
-      <span className="font-mono text-sm font-semibold capitalize text-slate-200">{label}</span>
+      <span className="relative font-mono text-sm font-semibold capitalize text-slate-200 transition-colors group-hover:text-white">
+        {label}
+      </span>
     </Link>
   )
 }
@@ -91,8 +73,8 @@ function Benefit({
   title: string; desc: string
 }) {
   return (
-    <div className="flex flex-col items-center gap-3 text-center">
-      <div className="flex h-11 w-11 items-center justify-center rounded-xl border border-purple-500/20 bg-purple-500/10">
+    <div className="group flex flex-col items-center gap-3 text-center">
+      <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-purple-500/20 bg-purple-500/10 transition-all duration-300 group-hover:border-purple-500/40 group-hover:bg-purple-500/20 group-hover:shadow-[0_0_20px_rgba(139,92,246,0.2)]">
         <Icon size={20} className="text-purple-400" />
       </div>
       <div>
@@ -103,18 +85,37 @@ function Benefit({
   )
 }
 
+function StatBadge({ value, label }: { value: string; label: string }) {
+  return (
+    <div className="flex flex-col items-center gap-0.5">
+      <span className="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text font-mono text-2xl font-bold text-transparent md:text-3xl">
+        {value}
+      </span>
+      <span className="font-mono text-xs text-slate-500">{label}</span>
+    </div>
+  )
+}
+
+const REVIEWS = [
+  { name: "Camila V.", text: "Llegó en 24h y el empaque era hermoso. La tela es tan suave que no quiero dormir con otra cosa.", stars: 5 },
+  { name: "Sofía R.", text: "Compré el set de estrellas para mi pijamada y todas querían saber dónde lo había conseguido. Diez de diez.", stars: 5 },
+  { name: "Valentina M.", text: "La bata nube es exactamente como la describen. Esponjosa, larga, perfecta para los domingos de no hacer nada.", stars: 5 },
+]
+
 export default function HomePage() {
+  const { data: allProducts, isLoading } = useProducts()
+  const featured = allProducts?.filter((p) => p.featured).slice(0, 4) ?? []
+
   return (
     <div className="flex flex-col" style={{ background: "#0D0D0F" }}>
 
-      {/* ── HERO: cielo estrellado ── */}
+      {/* ── HERO: cielo estrellado + aurora ── */}
       <section className="relative overflow-hidden px-6 pb-12 pt-16 md:pb-16 md:pt-20">
         <StarField />
-        <div aria-hidden className="pointer-events-none absolute -left-32 -top-32 h-[500px] w-[500px] rounded-full bg-purple-600/10 blur-[120px]" />
-        <div aria-hidden className="pointer-events-none absolute -bottom-20 -right-20 h-[400px] w-[400px] rounded-full bg-pink-600/10 blur-[100px]" />
+        <AuroraBg />
 
         <div className="relative mx-auto max-w-3xl text-center">
-          <span className="mb-6 inline-flex items-center gap-2 rounded-full border border-purple-500/25 bg-purple-500/10 px-4 py-1.5 font-mono text-xs font-medium text-purple-300">
+          <span className="mb-6 inline-flex items-center gap-2 rounded-full border border-purple-500/25 bg-purple-500/10 px-4 py-1.5 font-mono text-xs font-medium text-purple-300 backdrop-blur-sm">
             <Star size={11} fill="currentColor" />
             Nueva colección · Invierno 2026
           </span>
@@ -122,7 +123,7 @@ export default function HomePage() {
           <h1 className="font-mono text-5xl font-bold leading-[1.1] tracking-tight md:text-7xl">
             <span className="text-slate-100">IRL?</span>
             <br />
-            <span className="bg-gradient-to-r from-purple-400 via-pink-400 to-purple-400 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-purple-400 via-pink-400 to-purple-400 bg-clip-text text-transparent [background-size:200%] animate-[gradient-x_4s_linear_infinite]">
               no lo recomiendo
             </span>
           </h1>
@@ -134,12 +135,14 @@ export default function HomePage() {
 
           <div className="mt-10 flex flex-wrap items-center justify-center gap-3">
             <Link to="/products"
-              className="group inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-purple-500 to-pink-500 px-6 py-3 font-mono text-sm font-semibold text-white shadow-lg shadow-purple-500/25 transition-all duration-300 hover:shadow-purple-500/40 hover:brightness-110">
-              Explorar catálogo
-              <ArrowRight size={16} className="transition-transform duration-300 group-hover:translate-x-0.5" />
+              className="group relative inline-flex items-center gap-2 overflow-hidden rounded-xl bg-gradient-to-r from-purple-500 to-pink-500 px-6 py-3 font-mono text-sm font-semibold text-white shadow-lg shadow-purple-500/30 transition-all duration-300 hover:shadow-purple-500/50 hover:brightness-110">
+              <span className="relative z-10 flex items-center gap-2">
+                Explorar catálogo
+                <ArrowRight size={16} className="transition-transform duration-300 group-hover:translate-x-0.5" />
+              </span>
             </Link>
             <Link to="/products?category=pijamas"
-              className="inline-flex items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-6 py-3 font-mono text-sm font-semibold text-slate-300 transition-all duration-300 hover:bg-white/10">
+              className="inline-flex items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-6 py-3 font-mono text-sm font-semibold text-slate-300 backdrop-blur-sm transition-all duration-300 hover:border-purple-500/30 hover:bg-white/10">
               Ver pijamas
             </Link>
           </div>
@@ -158,15 +161,28 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── TRANSICIÓN 1: cielo → cuarto ── */}
-      <div aria-hidden className="pointer-events-none h-48 w-full" style={{
-        background: "linear-gradient(to bottom, #0D0D0F 0%, #0f0d20 25%, #141030 55%, #1A1A2E 100%)",
-      }} />
+      {/* ── STATS ── */}
+      <div style={{ background: "linear-gradient(to bottom, #0D0D0F 0%, #1A1A2E 100%)" }} className="px-6 pb-0 pt-6">
+        <div className="mx-auto max-w-6xl">
+          <div className="flex flex-wrap items-center justify-center gap-10 rounded-3xl border border-white/5 bg-white/[0.02] py-8 backdrop-blur md:gap-16">
+            <StatBadge value="2,400+" label="clientas felices" />
+            <div className="hidden h-8 w-px bg-white/5 md:block" />
+            <StatBadge value="4.9 ★" label="calificación promedio" />
+            <div className="hidden h-8 w-px bg-white/5 md:block" />
+            <StatBadge value="24h" label="envío express Lima" />
+            <div className="hidden h-8 w-px bg-white/5 md:block" />
+            <StatBadge value="100%" label="empaque regalo" />
+          </div>
+        </div>
+      </div>
 
       {/* ── CATEGORÍAS ── */}
       <section style={{ background: "#1A1A2E" }} className="px-6 pb-20">
         <div className="mx-auto max-w-6xl">
-          <h2 className="mb-8 font-mono text-xl font-bold text-slate-100">Explora por categoría</h2>
+          <p className="mb-2 font-mono text-xs font-medium uppercase tracking-widest text-purple-400">
+            Explorar por categoría
+          </p>
+          <h2 className="mb-8 font-mono text-xl font-bold text-slate-100">¿Qué buscas hoy?</h2>
           <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
             <CategoryPill emoji="🌙" label="Pijamas" to="/products?category=pijamas" delay={0} />
             <CategoryPill emoji="🧸" label="Batas" to="/products?category=batas" delay={100} />
@@ -190,11 +206,14 @@ export default function HomePage() {
               Ver todo <ArrowRight size={12} />
             </Link>
           </div>
+
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {featuredProducts.map((product) => (
-              <ProductCard key={product.id} product={product} />
-            ))}
+            {isLoading
+              ? Array.from({ length: 4 }).map((_, i) => <SkeletonCard key={i} />)
+              : featured.map((product) => <ProductCard key={product.id} product={product} />)
+            }
           </div>
+
           <div className="mt-6 text-center sm:hidden">
             <Link to="/products" className="inline-flex items-center gap-2 font-mono text-sm font-medium text-slate-400 hover:text-slate-200">
               Ver todo el catálogo <ArrowRight size={14} />
@@ -203,17 +222,21 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── TRANSICIÓN 2: cuarto → banner ── */}
+      {/* ── TRANSICIÓN 2 ── */}
       <div aria-hidden className="pointer-events-none h-32 w-full" style={{
         background: "linear-gradient(to bottom, #1A1A2E 0%, #130f28 50%, #0D0D0F 100%)",
       }} />
 
       {/* ── BANNER ── */}
-      <section className="px-6 pb-0" style={{ background: "#0D0D0F" }}>
-        <div className="relative mx-auto max-w-5xl overflow-hidden rounded-3xl px-8 py-14 text-center md:px-16"
-          style={{ background: "linear-gradient(135deg, #4c1d95 0%, #6b21a8 40%, #86198f 100%)" }}>
-          <div aria-hidden className="pointer-events-none absolute -left-20 -top-20 h-64 w-64 rounded-full bg-purple-400/20 blur-[60px]" />
-          <div aria-hidden className="pointer-events-none absolute -bottom-10 -right-10 h-48 w-48 rounded-full bg-pink-400/20 blur-[50px]" />
+      <section className="px-6" style={{ background: "#0D0D0F" }}>
+        <div className="relative mx-auto max-w-5xl overflow-hidden rounded-3xl px-8 py-16 text-center md:px-16"
+          style={{ background: "linear-gradient(135deg, #3b0764 0%, #581c87 30%, #6b21a8 60%, #86198f 100%)" }}>
+          <div aria-hidden className="pointer-events-none absolute -left-20 -top-20 h-80 w-80 rounded-full bg-violet-400/25 blur-[80px]" />
+          <div aria-hidden className="pointer-events-none absolute -bottom-16 -right-16 h-64 w-64 rounded-full bg-pink-400/30 blur-[70px]" />
+          <div aria-hidden className="pointer-events-none absolute right-1/4 top-1/4 h-48 w-48 rounded-full bg-fuchsia-400/20 blur-[60px]" />
+          {/* Ruido/textura sutil encima */}
+          <div aria-hidden className="pointer-events-none absolute inset-0 rounded-3xl"
+            style={{ backgroundImage: "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E\")", opacity: 0.5 }} />
           <p className="relative font-mono text-xs font-medium uppercase tracking-widest text-purple-200">
             Para tu próxima pijamada
           </p>
@@ -227,33 +250,70 @@ export default function HomePage() {
             Porque cada pijamada merece el outfit correcto.
           </p>
           <Link to="/products"
-            className="relative mt-8 inline-flex items-center gap-2 rounded-xl bg-white px-6 py-3 font-mono text-sm font-bold text-[#0D0D0F] transition-all hover:brightness-90">
+            className="relative mt-8 inline-flex items-center gap-2 rounded-xl bg-white px-7 py-3 font-mono text-sm font-bold text-[#0D0D0F] shadow-xl shadow-black/30 transition-all hover:scale-[1.02] hover:brightness-95">
             Armar mi kit <ArrowRight size={15} />
           </Link>
         </div>
       </section>
 
-      {/* ── TRANSICIÓN 3: banner → beneficios ── */}
+      {/* ── TRANSICIÓN 3 ── */}
       <div aria-hidden className="pointer-events-none h-24 w-full" style={{
         background: "linear-gradient(to bottom, #0D0D0F 0%, #0f0d1e 100%)",
       }} />
 
       {/* ── BENEFICIOS ── */}
       <section className="px-6 py-16" style={{ background: "#0f0d1e" }}>
-        <div className="mx-auto grid max-w-6xl grid-cols-1 gap-8 sm:grid-cols-3">
-          <Benefit icon={Truck} title="Envío a todo Lima" desc="Express en 24–48h a tu puerta. Sin excusas para no estrenar." />
-          <Benefit icon={Package} title="Empaque regalo" desc="Cada pedido llega listo para sorprender. Sin costo extra." />
-          <Benefit icon={ShieldCheck} title="Cambios fáciles" desc="¿No es tu talla? Lo cambiamos sin preguntas en 7 días." />
+        <div className="mx-auto max-w-6xl">
+          <p className="mb-2 text-center font-mono text-xs font-medium uppercase tracking-widest text-purple-400">
+            Por qué elegirnos
+          </p>
+          <h2 className="mb-10 text-center font-mono text-xl font-bold text-slate-100">
+            Sin complicaciones, solo comodidad
+          </h2>
+          <div className="grid grid-cols-1 gap-8 sm:grid-cols-3">
+            <Benefit icon={Truck} title="Envío a todo Lima" desc="Express en 24–48h a tu puerta. Sin excusas para no estrenar." />
+            <Benefit icon={Package} title="Empaque regalo" desc="Cada pedido llega listo para sorprender. Sin costo extra." />
+            <Benefit icon={ShieldCheck} title="Cambios fáciles" desc="¿No es tu talla? Lo cambiamos sin preguntas en 7 días." />
+          </div>
         </div>
       </section>
 
-      {/* ── TRANSICIÓN 4: beneficios → cama de almohadas ── */}
-      <div aria-hidden className="pointer-events-none h-20 w-full" style={{
+      {/* ── RESEÑAS ── */}
+      <div aria-hidden className="pointer-events-none h-16 w-full" style={{
         background: "linear-gradient(to bottom, #0f0d1e 0%, #12102a 100%)",
       }} />
 
+      <section className="px-6 py-16" style={{ background: "#12102a" }}>
+        <div className="mx-auto max-w-6xl">
+          <p className="mb-2 text-center font-mono text-xs font-medium uppercase tracking-widest text-purple-400">
+            Reseñas
+          </p>
+          <h2 className="mb-10 text-center font-mono text-xl font-bold text-slate-100">
+            Lo que dicen nuestras clientas
+          </h2>
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+            {REVIEWS.map(({ name, text, stars }) => (
+              <div key={name} className="group flex flex-col gap-3 rounded-2xl border border-white/5 bg-[#1A1A2E] p-5 transition-all duration-300 hover:border-purple-500/20 hover:shadow-[0_0_20px_rgba(139,92,246,0.1)]">
+                <div className="flex gap-0.5">
+                  {Array.from({ length: stars }).map((_, i) => (
+                    <Star key={i} size={12} className="fill-yellow-400 text-yellow-400" />
+                  ))}
+                </div>
+                <p className="text-xs leading-relaxed text-slate-400 group-hover:text-slate-300">"{text}"</p>
+                <p className="mt-auto font-mono text-xs font-semibold text-slate-300">— {name}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── TRANSICIÓN 4 ── */}
+      <div aria-hidden className="pointer-events-none h-20 w-full" style={{
+        background: "linear-gradient(to bottom, #12102a 0%, #141230 100%)",
+      }} />
+
       {/* ── ALMOHADAS ── */}
-      <div style={{ background: "#12102a" }} className="pb-0">
+      <div style={{ background: "#141230" }} className="pb-0">
         <p className="pt-6 text-center font-mono text-xs text-slate-700">buenas noches 🌙</p>
         <PillowField />
       </div>

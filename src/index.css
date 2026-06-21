@@ -131,3 +131,118 @@
   scroll-behavior: smooth;
   }
 }
+
+/* ── Aurora animated background blobs ── */
+@keyframes aurora-drift-1 {
+  0%,100% { transform: translate(0,0) scale(1); }
+  25%      { transform: translate(60px,-40px) scale(1.12); }
+  50%      { transform: translate(25px,55px) scale(0.94); }
+  75%      { transform: translate(-45px,15px) scale(1.06); }
+}
+@keyframes aurora-drift-2 {
+  0%,100% { transform: translate(0,0) scale(1); }
+  33%     { transform: translate(-55px,35px) scale(1.09); }
+  66%     { transform: translate(40px,-25px) scale(0.91); }
+}
+@keyframes aurora-drift-3 {
+  0%,100% { transform: translate(0,0) scale(1); }
+  40%     { transform: translate(35px,60px) scale(1.14); }
+  80%     { transform: translate(-20px,-30px) scale(0.95); }
+}
+@keyframes aurora-drift-4 {
+  0%,100% { transform: translate(0,0) scale(1) rotate(0deg); }
+  50%     { transform: translate(-40px,30px) scale(1.08) rotate(10deg); }
+}
+
+.aurora-blob {
+  position: absolute;
+  border-radius: 50%;
+  will-change: transform;
+}
+.aurora-1 {
+  top: -18%;  left: -8%;
+  width: 65%; height: 75%;
+  background: radial-gradient(ellipse at center,
+    rgba(139,92,246,0.22) 0%,
+    rgba(109,40,217,0.10) 40%,
+    transparent 70%);
+  filter: blur(90px);
+  animation: aurora-drift-1 22s ease-in-out infinite;
+}
+.aurora-2 {
+  top: -8%;  right: -12%;
+  width: 58%; height: 65%;
+  background: radial-gradient(ellipse at center,
+    rgba(236,72,153,0.17) 0%,
+    rgba(192,38,211,0.07) 40%,
+    transparent 70%);
+  filter: blur(100px);
+  animation: aurora-drift-2 28s ease-in-out infinite;
+}
+.aurora-3 {
+  bottom: -5%; left: 25%;
+  width: 50%; height: 55%;
+  background: radial-gradient(ellipse at center,
+    rgba(192,132,252,0.14) 0%,
+    transparent 65%);
+  filter: blur(80px);
+  animation: aurora-drift-3 20s ease-in-out infinite;
+}
+.aurora-4 {
+  top: 35%; right: 5%;
+  width: 35%; height: 40%;
+  background: radial-gradient(ellipse at center,
+    rgba(244,114,182,0.10) 0%,
+    transparent 65%);
+  filter: blur(70px);
+  animation: aurora-drift-4 16s ease-in-out infinite;
+}
+
+/* ── Card shimmer sweep ── */
+@keyframes shimmer-sweep {
+  0%   { transform: translateX(-100%) skewX(-8deg); }
+  100% { transform: translateX(300%) skewX(-8deg); }
+}
+.card-shimmer {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border-radius: inherit;
+  pointer-events: none;
+}
+.card-shimmer::after {
+  content: '';
+  position: absolute;
+  top: 0; bottom: 0;
+  width: 40%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255,255,255,0.06),
+    transparent
+  );
+  transform: translateX(-100%) skewX(-8deg);
+  transition: none;
+}
+.group:hover .card-shimmer::after {
+  animation: shimmer-sweep 0.65s ease forwards;
+}
+
+/* ── Gradient border glow on hover ── */
+@keyframes border-glow {
+  0%,100% { opacity: 0.4; }
+  50%      { opacity: 0.9; }
+}
+.glow-border-hover {
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  background: linear-gradient(135deg, rgba(139,92,246,0.5), rgba(236,72,153,0.5));
+  opacity: 0;
+  transition: opacity 0.3s;
+  z-index: -1;
+  filter: blur(8px);
+}
+.group:hover .glow-border-hover {
+  opacity: 0.6;
+}

@@ -1,7 +1,16 @@
-import { Link, NavLink, Outlet } from "react-router-dom"
+import { Link, NavLink, Outlet, useLocation } from "react-router-dom"
 import { ShoppingBag, Moon, Menu, X } from "lucide-react"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { cn } from "@/lib/utils"
+import { useCartContext } from "@/context/CartContext"
+
+function ScrollToTop() {
+  const { pathname } = useLocation()
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" })
+  }, [pathname])
+  return null
+}
 
 const navLinks = [
   { to: "/", label: "Inicio" },
@@ -11,9 +20,11 @@ const navLinks = [
 
 export default function RootLayout() {
   const [mobileOpen, setMobileOpen] = useState(false)
+  const { itemCount } = useCartContext()
 
   return (
     <div className="flex min-h-screen flex-col bg-[#0D0D0F] text-slate-100">
+      <ScrollToTop />
       <header className="sticky top-0 z-50 border-b border-white/5 bg-[#0D0D0F]/80 backdrop-blur-md">
         <nav className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
           <Link to="/" className="group flex items-center gap-2" onClick={() => setMobileOpen(false)}>
@@ -51,11 +62,17 @@ export default function RootLayout() {
             ))}
           </ul>
 
-          <Link to="/cart" className="relative rounded-lg p-2 text-slate-400 transition-colors hover:text-slate-100" aria-label="Ver carrito">
+          <Link
+            to="/cart"
+            className="relative rounded-lg p-2 text-slate-400 transition-colors hover:text-slate-100"
+            aria-label="Ver carrito"
+          >
             <ShoppingBag size={20} />
-            <span className="absolute -right-1 -top-1 flex h-4 w-4 items-center justify-center rounded-full bg-gradient-to-br from-purple-500 to-pink-500 font-mono text-[10px] font-bold text-white">
-              0
-            </span>
+            {itemCount > 0 && (
+              <span className="absolute -right-1 -top-1 flex h-4 w-4 items-center justify-center rounded-full bg-gradient-to-br from-purple-500 to-pink-500 font-mono text-[10px] font-bold text-white">
+                {itemCount > 9 ? "9+" : itemCount}
+              </span>
+            )}
           </Link>
 
           <button
