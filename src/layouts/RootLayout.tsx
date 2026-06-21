@@ -20,7 +20,7 @@ export default function RootLayout() {
             <Moon size={20} className="text-purple-400 transition-transform group-hover:rotate-12" />
             <span className="font-mono text-lg font-bold tracking-tight">
               <span className="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
-                Pijamazo
+                PIJAmazo
               </span>
             </span>
           </Link>
@@ -104,9 +104,9 @@ export default function RootLayout() {
             <div>
               <div className="flex items-center gap-2">
                 <Moon size={16} className="text-purple-400" />
-                <span className="font-mono font-bold text-slate-100">Pijamazo</span>
+                <span className="font-mono font-bold text-slate-100">PIJAmazo</span>
               </div>
-              <p className="mt-1 text-xs text-slate-500">No salgas. es tu era.</p>
+              <p className="mt-1 text-xs text-slate-500">NO HAY NADA COMO CASITA</p>
             </div>
             <div className="flex gap-6 text-xs text-slate-500">
               <Link to="/products" className="transition-colors hover:text-slate-300">Catálogo</Link>
