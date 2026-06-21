@@ -1,75 +1,61 @@
-# React + TypeScript + Vite
+# 🌙 Pijamazo
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+E-commerce de pijamas y ropa cómoda para adolescentes. "IRL? no lo recomiendo."
 
-Currently, two official plugins are available:
+🔗 **Deploy:** [pijamazo.vercel.app](https://pijamazo.vercel.app)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Integrantes:
+  ### William Julon 
+  ### Gabriel llanos
+  ### Alexander Sanabria
+---
 
-## React Compiler
 
-The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
+## Estructura
 
-Note: This will impact Vite dev & build performances.
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```
+src/
+├── components/       # Componentes reutilizables (StarField, PillowField, ui/)
+├── data/             # Productos mock
+├── hooks/            # Custom hooks
+├── layouts/          # RootLayout con navbar y footer
+├── pages/            # HomePage, ProductsPage, CartPage
+├── routes/           # Router con React Router DOM
+├── services/         # Capa de servicios (Axios)
+└── types/            # Tipos TypeScript (Product, Category)
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+---
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+# Evidencias
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+### 1. Creación de proyecto e instalación de shadcn
+
+![Creación de proyecto](docs/2w.png)
+![Creación de proyecto](docs/1w.png)
+
+
+### 2. Creación de rutas
+
+![Creación de rutas](docs/3w.png)
+![Creación de rutas](docs/4w.png)
+
+
+### 3. Creación de layout
+
+![Layout Principal](docs/6w.png)
+
+<!-- Agrega docs/3w.png con captura de: RootLayout con navbar, footer y las rutas navegando -->
+
+### 4. Homepage
+
+![HOME](docs/5w.png)
+
+
+---
+
+
+
+## Carrera
+
+Diseño y Desarrollo de Software — IV Ciclo · Tecsup 2026
