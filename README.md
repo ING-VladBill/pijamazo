@@ -27,7 +27,7 @@ src/
 
 ---
 
-# Evidencias
+# William Julon Evidencias
 
 ### 1. Creación de proyecto e instalación de shadcn
 
@@ -45,7 +45,6 @@ src/
 
 ![Layout Principal](docs/6w.png)
 
-<!-- Agrega docs/3w.png con captura de: RootLayout con navbar, footer y las rutas navegando -->
 
 ### 4. Homepage
 
@@ -54,10 +53,10 @@ src/
 ### 5. Catálogo
 ![Catálogo](docs/7w.png)
 
-## Detalle de Producto
+## 6. Detalle de Producto
 ![Detalle de Producto](docs/8w.png)
 
-## Carrito
+## 7. Carrito
 ![Carrito](docs/9w.png)
 ---
 
@@ -88,6 +87,34 @@ src/
 ![Detalle de producto](docs/GLLANOS_4.3.png)
 ![Carrito con producto agregado](docs/GLLANOS_4.4.png)
 
+# Alexander Sanabria
+
+### 1. Creación de proyecto e instalación de shadcn
+
+![Creación de proyecto](./AlexSanabria/cinespoilers/evidencias/cap1.png)
+
+
+
+### 2. Creación de rutas
+
+![Creación de rutas](./AlexSanabria/cinespoilers/evidencias/cap2.png)
+![Creación de rutas](./AlexSanabria/cinespoilers/evidencias/cap2.1.png)
+
+
+### 3. Creación de layout
+
+![Layout Principal](./AlexSanabria/cinespoilers/evidencias/cap3.png)
+
+
+### 4. Homepage
+
+![HOME](./AlexSanabria/cinespoilers/evidencias/cap4.png)
+
+### 5. Catálogo
+![Catálogo](./AlexSanabria/cinespoilers/evidencias/cap5.png)
+
+## 6. Detalle de Producto
+![Detalle de Producto](./AlexSanabria/cinespoilers/evidencias/cap6.png)
 
 ## Carrera
 
