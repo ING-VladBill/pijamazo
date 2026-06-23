@@ -1,11 +1,21 @@
 import { Link } from 'react-router-dom'
 
+const movies = [
+  { id: 1, title: 'Inception', genre: 'Sci-Fi', rating: '8.8' },
+  { id: 2, title: 'The Dark Knight', genre: 'Acción', rating: '9.0' },
+  { id: 3, title: 'Interstellar', genre: 'Sci-Fi', rating: '8.6' },
+  { id: 4, title: 'Pulp Fiction', genre: 'Drama', rating: '8.9' },
+  { id: 5, title: 'The Matrix', genre: 'Sci-Fi', rating: '8.7' },
+  { id: 6, title: 'Avengers', genre: 'Acción', rating: '8.4' },
+]
+
 const HomePage = () => {
   return (
-    <div style={{ minHeight: '100vh', background: '#141414', color: '#fff' }}>
+    <div style={{ background: '#141414', color: '#fff', minHeight: '100vh' }}>
+      {/* Hero */}
       <div style={{
         background: 'linear-gradient(to bottom, rgba(0,0,0,0.6), #141414), url(https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=1600) center/cover no-repeat',
-        minHeight: '85vh',
+        minHeight: '75vh',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
@@ -15,31 +25,53 @@ const HomePage = () => {
           🎬 Ahora en cartelera
         </p>
         <h1 style={{ fontSize: '4rem', fontWeight: 900, margin: '0 0 1rem', maxWidth: '600px', lineHeight: 1.1 }}>
-          Pijamazo<br /><span style={{ color: '#e50914' }}>sin límites.</span>
+          Pijamazo,<br /><span style={{ color: '#e50914' }}>modo cueva.</span>
         </h1>
         <p style={{ color: '#aaa', fontSize: '1.1rem', maxWidth: '500px', marginBottom: '2rem', lineHeight: 1.6 }}>
           Descubre las mejores películas, compra tus entradas y vive la experiencia del cine desde casa.
         </p>
         <div style={{ display: 'flex', gap: '1rem' }}>
           <Link to="/movies" style={{ textDecoration: 'none' }}>
-            <button style={{
-              background: '#e50914', color: '#fff', border: 'none',
-              padding: '0.8rem 2rem', borderRadius: '4px', fontWeight: 700,
-              fontSize: '1rem', cursor: 'pointer',
-            }}>
+            <button style={{ background: '#e50914', color: '#fff', border: 'none', padding: '0.8rem 2rem', borderRadius: '4px', fontWeight: 700, fontSize: '1rem', cursor: 'pointer' }}>
               ▶ Ver Catálogo
             </button>
           </Link>
           <Link to="/movies" style={{ textDecoration: 'none' }}>
-            <button style={{
-              background: 'rgba(255,255,255,0.2)', color: '#fff',
-              border: '1px solid rgba(255,255,255,0.3)',
-              padding: '0.8rem 2rem', borderRadius: '4px', fontWeight: 700,
-              fontSize: '1rem', cursor: 'pointer', backdropFilter: 'blur(4px)',
-            }}>
+            <button style={{ background: 'rgba(255,255,255,0.2)', color: '#fff', border: '1px solid rgba(255,255,255,0.3)', padding: '0.8rem 2rem', borderRadius: '4px', fontWeight: 700, fontSize: '1rem', cursor: 'pointer' }}>
               ℹ Más info
             </button>
           </Link>
+        </div>
+      </div>
+
+      {/* Grid de películas */}
+      <div style={{ padding: '2rem 4rem' }}>
+        <h2 style={{ fontSize: '1.5rem', fontWeight: 700, marginBottom: '1.5rem' }}>🔥 Tendencias</h2>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(180px, 1fr))', gap: '1rem' }}>
+          {movies.map(movie => (
+            <Link key={movie.id} to={`/movies/${movie.id}`} style={{ textDecoration: 'none' }}>
+              <div style={{
+                background: '#1f1f1f',
+                borderRadius: '6px',
+                overflow: 'hidden',
+                border: '1px solid #333',
+                transition: 'transform 0.2s',
+                cursor: 'pointer',
+              }}
+                onMouseEnter={e => (e.currentTarget.style.transform = 'scale(1.05)')}
+                onMouseLeave={e => (e.currentTarget.style.transform = 'scale(1)')}
+              >
+                <div style={{ height: '240px', background: `linear-gradient(135deg, #e50914, #141414)`, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <span style={{ fontSize: '3rem' }}>🎬</span>
+                </div>
+                <div style={{ padding: '0.8rem' }}>
+                  <p style={{ color: '#fff', fontWeight: 600, margin: '0 0 0.3rem', fontSize: '0.9rem' }}>{movie.title}</p>
+                  <p style={{ color: '#aaa', margin: '0 0 0.3rem', fontSize: '0.8rem' }}>{movie.genre}</p>
+                  <p style={{ color: '#e50914', margin: 0, fontSize: '0.8rem', fontWeight: 700 }}>⭐ {movie.rating}</p>
+                </div>
+              </div>
+            </Link>
+          ))}
         </div>
       </div>
     </div>
