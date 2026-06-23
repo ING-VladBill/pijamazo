@@ -1,15 +1,10 @@
 import { Link } from 'react-router-dom'
-
-const movies = [
-  { id: 1, title: 'Inception', genre: 'Sci-Fi', rating: '8.8' },
-  { id: 2, title: 'The Dark Knight', genre: 'Acción', rating: '9.0' },
-  { id: 3, title: 'Interstellar', genre: 'Sci-Fi', rating: '8.6' },
-  { id: 4, title: 'Pulp Fiction', genre: 'Drama', rating: '8.9' },
-  { id: 5, title: 'The Matrix', genre: 'Sci-Fi', rating: '8.7' },
-  { id: 6, title: 'Avengers', genre: 'Acción', rating: '8.4' },
-]
+import { useMovies } from '../hooks/useMovies'
+import { IMG_BASE } from '../api/tmdb'
 
 const HomePage = () => {
+  const { data: movies } = useMovies()
+
   return (
     <div style={{ background: '#141414', color: '#fff', minHeight: '100vh' }}>
       {/* Hero */}
@@ -44,30 +39,22 @@ const HomePage = () => {
         </div>
       </div>
 
-      {/* Grid de películas */}
+      {/* Grid */}
       <div style={{ padding: '2rem 4rem' }}>
         <h2 style={{ fontSize: '1.5rem', fontWeight: 700, marginBottom: '1.5rem' }}>🔥 Tendencias</h2>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(180px, 1fr))', gap: '1rem' }}>
-          {movies.map(movie => (
+          {movies?.slice(0, 6).map((movie: any) => (
             <Link key={movie.id} to={`/movies/${movie.id}`} style={{ textDecoration: 'none' }}>
-              <div style={{
-                background: '#1f1f1f',
-                borderRadius: '6px',
-                overflow: 'hidden',
-                border: '1px solid #333',
-                transition: 'transform 0.2s',
-                cursor: 'pointer',
-              }}
+              <div
+                style={{ background: '#1f1f1f', borderRadius: '6px', overflow: 'hidden', border: '1px solid #333', cursor: 'pointer', transition: 'transform 0.2s' }}
                 onMouseEnter={e => (e.currentTarget.style.transform = 'scale(1.05)')}
                 onMouseLeave={e => (e.currentTarget.style.transform = 'scale(1)')}
               >
-                <div style={{ height: '240px', background: `linear-gradient(135deg, #e50914, #141414)`, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  <span style={{ fontSize: '3rem' }}>🎬</span>
-                </div>
+                <img src={`${IMG_BASE}${movie.poster_path}`} alt={movie.title} style={{ width: '100%', height: '240px', objectFit: 'cover' }} />
                 <div style={{ padding: '0.8rem' }}>
                   <p style={{ color: '#fff', fontWeight: 600, margin: '0 0 0.3rem', fontSize: '0.9rem' }}>{movie.title}</p>
-                  <p style={{ color: '#aaa', margin: '0 0 0.3rem', fontSize: '0.8rem' }}>{movie.genre}</p>
-                  <p style={{ color: '#e50914', margin: 0, fontSize: '0.8rem', fontWeight: 700 }}>⭐ {movie.rating}</p>
+                  <p style={{ color: '#aaa', margin: '0 0 0.3rem', fontSize: '0.8rem' }}>{movie.release_date?.slice(0, 4)}</p>
+                  <p style={{ color: '#e50914', margin: 0, fontSize: '0.8rem', fontWeight: 700 }}>⭐ {movie.vote_average?.toFixed(1)}</p>
                 </div>
               </div>
             </Link>
