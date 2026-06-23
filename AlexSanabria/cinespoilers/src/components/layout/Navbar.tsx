@@ -1,13 +1,49 @@
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 
 const Navbar = () => {
+  const location = useLocation()
+
+  const links = [
+    { to: '/', label: 'Inicio' },
+    { to: '/movies', label: 'Catálogo' },
+    { to: '/cart', label: 'Carrito' },
+  ]
+
   return (
-    <nav style={{ display: 'flex', gap: '2rem', padding: '1rem 2rem', borderBottom: '1px solid #27272a', alignItems: 'center', background: '#09090b' }}>
-      <span style={{ fontWeight: 'bold', fontSize: '1.2rem', color: '#a78bfa' }}>🎬 CineSpoilerS</span>
-      <Link to="/" style={{ color: '#fafafa', textDecoration: 'none' }}>Home</Link>
-      <Link to="/movies" style={{ color: '#fafafa', textDecoration: 'none' }}>Catálogo</Link>
-      <Link to="/cart" style={{ color: '#fafafa', textDecoration: 'none' }}>Carrito</Link>
-    </nav>
+    <header style={{
+      background: '#141414',
+      borderBottom: '1px solid #e50914',
+      padding: '0 3rem',
+      height: '68px',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      position: 'sticky',
+      top: 0,
+      zIndex: 100,
+    }}>
+      <Link to="/" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+        <span style={{ fontWeight: 900, fontSize: '1.6rem', color: '#e50914', letterSpacing: '-1px', fontFamily: 'Georgia, serif' }}>
+          Pijamazo
+        </span>
+      </Link>
+
+      <nav style={{ display: 'flex', gap: '1.5rem', alignItems: 'center' }}>
+        {links.map(link => (
+          <Link key={link.to} to={link.to} style={{
+            textDecoration: 'none',
+            color: location.pathname === link.to ? '#fff' : '#aaa',
+            fontWeight: location.pathname === link.to ? 700 : 400,
+            fontSize: '0.95rem',
+            borderBottom: location.pathname === link.to ? '2px solid #e50914' : '2px solid transparent',
+            paddingBottom: '2px',
+            transition: 'all 0.2s',
+          }}>
+            {link.label}
+          </Link>
+        ))}
+      </nav>
+    </header>
   )
 }
 
