@@ -1,12 +1,21 @@
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import Navbar from './components/layout/Navbar'
+import HomePage from './pages/HomePage'
+import MoviesPage from './pages/MoviesPage'
+import MovieDetailPage from './pages/MovieDetailPage'
+import CartPage from './pages/CartPage'
+
 function App() {
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100vh' }}>
-      <h1 style={{ fontSize: '3rem', fontWeight: 'bold' }}>Pijamazo</h1>
-      <p style={{ color: '#a1a1aa' }}>Tu cine, sin spoilers... o con todos.</p>
-      <button style={{ marginTop: '1rem', padding: '0.5rem 1.5rem', background: 'transparent', border: '1px solid #fafafa', color: '#fafafa', cursor: 'pointer' }}>
-        Explorar películas
-      </button>
-    </div>
+    <BrowserRouter>
+      <Navbar />
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/movies" element={<MoviesPage />} />
+        <Route path="/movies/:id" element={<MovieDetailPage />} />
+        <Route path="/cart" element={<CartPage />} />
+      </Routes>
+    </BrowserRouter>
   )
 }
 
